@@ -8,10 +8,9 @@ type FetchError = {
   message: string;
 };
 
-interface RequestOptions extends RequestInit {
-  headers?: HeadersInit;
+export interface RequestOptions extends RequestInit {
+  apiKey?: string;
 }
-
 /**
  * An asynchronous function that wraps the native fetch function providing enhanced error handling.
  * Automatically includes 'Content-Type': 'application/json' header, but also allows other headers to be included optionally.
@@ -30,6 +29,7 @@ export const doFetch = async <T>(
     ...options,
     headers: {
       "Content-Type": "application/json",
+      apiKey: options?.apiKey ?? "",
       ...options?.headers,
     },
   };
@@ -57,6 +57,7 @@ export const doFetch = async <T>(
     throw {
       type: "api-error",
       message: `${response.status} - ${errMsg}`,
+      error: response,
     } as FetchError;
   }
 

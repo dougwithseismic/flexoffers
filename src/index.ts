@@ -1,4 +1,4 @@
-import { doFetch } from "./helpers";
+import { doFetch, RequestOptions } from "./helpers";
 
 import {
   Domain,
@@ -48,7 +48,7 @@ import {
   GetAllCatalogsParams,
 } from "./types";
 
-const API_HOST = `https://api.flexoffers.com/`;
+const API_HOST = `https://api.flexoffers.com`;
 
 let API_KEY: string | undefined;
 
@@ -60,7 +60,32 @@ const init = (apiKey: string): void => {
   }
 
   API_KEY = apiKey;
+  console.log("FlexOffers API initialized");
 };
+
+const doFetchWrapper = async <T>(
+  url: string,
+  options?: RequestOptions
+): Promise<T> => {
+  // Check for an API key.
+  if (!API_KEY) {
+    throw new Error(
+      "FlexOffers: Check that you're passing your API key to init()"
+    );
+  }
+
+  try {
+    const data = await doFetch<T>(url, {
+      apiKey: API_KEY as string,
+      ...options,
+    });
+    return data;
+  } catch (error: unknown) {
+    console.error("Error Fetching: ", error);
+    return undefined as unknown as T;
+  }
+};
+
 /**
  * Fetches domain details from the FlexOffers API.
  */
@@ -68,7 +93,7 @@ const getDomains = async (): Promise<Domain[]> => {
   const url = new URL(`${API_HOST}/domains`);
 
   try {
-    const domains = await doFetch<Domain[]>(url.toString());
+    const domains = await doFetchWrapper<Domain[]>(url.toString());
     return domains;
   } catch (error: unknown) {
     console.error(`Failed to fetch domains: ${error}`);
@@ -82,7 +107,9 @@ const getCategories = async (): Promise<PromotionalCategory[]> => {
   const url = new URL(`${API_HOST}/categories`);
 
   try {
-    const categories = await doFetch<PromotionalCategory[]>(url.toString());
+    const categories = await doFetchWrapper<PromotionalCategory[]>(
+      url.toString()
+    );
     return categories;
   } catch (error) {
     console.error(`Failed to fetch categories: ${error}`);
@@ -103,7 +130,9 @@ const getAdvertiserTerms = async (
   url.searchParams.append("advertiserId", advertiserId);
 
   try {
-    const advertiserTerms = await doFetch<AdvertiserTerm[]>(url.toString());
+    const advertiserTerms = await doFetchWrapper<AdvertiserTerm[]>(
+      url.toString()
+    );
     return advertiserTerms;
   } catch (error) {
     console.error(
@@ -126,7 +155,7 @@ const applyToAdvertiser = async (
   url.searchParams.append("advertiserId", advertiserId);
 
   try {
-    const applyResponse = await doFetch<ApplyResponse>(url.toString());
+    const applyResponse = await doFetchWrapper<ApplyResponse>(url.toString());
     return applyResponse;
   } catch (error) {
     console.error(
@@ -152,7 +181,7 @@ const getAdvertisers = async (
   url.search = queryParams.toString();
 
   try {
-    const advertisers = await doFetch<Advertiser[]>(url.toString());
+    const advertisers = await doFetchWrapper<Advertiser[]>(url.toString());
     return advertisers;
   } catch (error: unknown) {
     console.error(`Failed to fetch advertisers: ${error}`);
@@ -175,7 +204,9 @@ const createDeepLink = async (
   url.search = queryParams.toString();
 
   try {
-    const deeplinkResponse = await doFetch<DeeplinkResponse>(url.toString());
+    const deeplinkResponse = await doFetchWrapper<DeeplinkResponse>(
+      url.toString()
+    );
     return deeplinkResponse;
   } catch (error) {
     console.error(`Failed to create deeplink: ${error}`);
@@ -193,7 +224,9 @@ const getPromotionalLinks = async (
   url.search = queryParams.toString();
 
   try {
-    const promotionalLinks = await doFetch<PromotionalLink[]>(url.toString());
+    const promotionalLinks = await doFetchWrapper<PromotionalLink[]>(
+      url.toString()
+    );
     return promotionalLinks;
   } catch (error) {
     console.error(`Failed to retrieve promotional links: ${error}`);
@@ -211,7 +244,9 @@ const getPromotionsCurated = async (
   url.search = queryParams.toString();
 
   try {
-    const promotionalLinks = await doFetch<PromotionalLink[]>(url.toString());
+    const promotionalLinks = await doFetchWrapper<PromotionalLink[]>(
+      url.toString()
+    );
     return promotionalLinks;
   } catch (error) {
     console.error(`Failed to retrieve curated promotional links: ${error}`);
@@ -229,7 +264,9 @@ const getCoupons = async (
   url.search = queryParams.toString();
 
   try {
-    const promotionalLinks = await doFetch<PromotionalLink[]>(url.toString());
+    const promotionalLinks = await doFetchWrapper<PromotionalLink[]>(
+      url.toString()
+    );
     return promotionalLinks;
   } catch (error) {
     console.error(`Failed to retrieve coupons: ${error}`);
@@ -247,7 +284,9 @@ const getPromotionTypes = async (
   url.search = queryParams.toString();
 
   try {
-    const promotionTypes = await doFetch<PromotionType[]>(url.toString());
+    const promotionTypes = await doFetchWrapper<PromotionType[]>(
+      url.toString()
+    );
     return promotionTypes;
   } catch (error) {
     console.error(`Failed to fetch promotion types: ${error}`);
@@ -269,7 +308,7 @@ const getPromotionTypesCountByAdvertiserId = async (
   url.search = queryParams.toString();
 
   try {
-    const promotionTypesCount = await doFetch<PromotionTypeCount[]>(
+    const promotionTypesCount = await doFetchWrapper<PromotionTypeCount[]>(
       url.toString()
     );
     return promotionTypesCount;
@@ -286,7 +325,7 @@ const getBannerTypes = async (): Promise<BannerType[]> => {
   const url = `${API_HOST}/bannerTypes`;
 
   try {
-    const bannerTypes = await doFetch<BannerType[]>(url);
+    const bannerTypes = await doFetchWrapper<BannerType[]>(url);
     return bannerTypes;
   } catch (error) {
     console.error(`Failed to fetch banner types: ${error}`);
@@ -301,7 +340,7 @@ const getCampaigns = async (): Promise<Campaign[]> => {
   const url = `${API_HOST}/campaigns`;
 
   try {
-    const campaigns = await doFetch<Campaign[]>(url);
+    const campaigns = await doFetchWrapper<Campaign[]>(url);
     return campaigns;
   } catch (error) {
     console.error(`Failed to fetch campaigns: ${error}`);
@@ -319,7 +358,9 @@ const getFeaturedAdvertisers = async (
   url.search = queryParams.toString();
 
   try {
-    const advertisers = await doFetch<FeaturedAdvertiser[]>(url.toString());
+    const advertisers = await doFetchWrapper<FeaturedAdvertiser[]>(
+      url.toString()
+    );
     return advertisers;
   } catch (error) {
     console.error(`Failed to fetch featured advertisers: ${error}`);
@@ -337,7 +378,9 @@ const getNewestAdvertisers = async (
   url.search = queryParams.toString();
 
   try {
-    const advertisers = await doFetch<NewestAdvertiser[]>(url.toString());
+    const advertisers = await doFetchWrapper<NewestAdvertiser[]>(
+      url.toString()
+    );
     return advertisers;
   } catch (error) {
     console.error(`Failed to fetch newest advertisers: ${error}`);
@@ -355,7 +398,7 @@ const getProductAdvertisers = async (
   url.search = queryParams.toString();
 
   try {
-    const productAdvertisers = await doFetch<ProductAdvertiser[]>(
+    const productAdvertisers = await doFetchWrapper<ProductAdvertiser[]>(
       url.toString()
     );
     return productAdvertisers;
@@ -375,7 +418,9 @@ const getProductCatalogs = async (
   url.search = queryParams.toString();
 
   try {
-    const productCatalogs = await doFetch<ProductCatalog[]>(url.toString());
+    const productCatalogs = await doFetchWrapper<ProductCatalog[]>(
+      url.toString()
+    );
     return productCatalogs;
   } catch (error) {
     console.error(`Failed to fetch product catalogs: ${error}`);
@@ -393,7 +438,7 @@ const getAllCatalogs = async (
   url.search = queryParams.toString();
 
   try {
-    const catalogs = await doFetch<Catalog[]>(url.toString());
+    const catalogs = await doFetchWrapper<Catalog[]>(url.toString());
     return catalogs;
   } catch (error) {
     console.error(`Failed to fetch all catalogs: ${error}`);
@@ -411,7 +456,7 @@ const getProductCategories = async (
   url.search = queryParams.toString();
 
   try {
-    const categories = await doFetch<Category[]>(url.toString());
+    const categories = await doFetchWrapper<Category[]>(url.toString());
     return categories;
   } catch (error) {
     console.error(`Failed to fetch product categories: ${error}`);
@@ -429,7 +474,7 @@ const getProductCount = async (
   url.search = queryParams.toString();
 
   try {
-    const productCount = await doFetch<ProductCount>(url.toString());
+    const productCount = await doFetchWrapper<ProductCount>(url.toString());
     return productCount;
   } catch (error) {
     console.error(`Failed to fetch product count: ${error}`);
@@ -454,10 +499,9 @@ const getProducts = async (
   url.search = queryParams.toString();
 
   try {
-    const shortProductDescriptions = await doFetch<ShortProductDescription[]>(
-      url.toString(),
-      { headers: { Authorization: `BEARER ${API_KEY}` } }
-    );
+    const shortProductDescriptions = await doFetchWrapper<
+      ShortProductDescription[]
+    >(url.toString(), { headers: { Authorization: `BEARER ${API_KEY}` } });
     return shortProductDescriptions;
   } catch (error) {
     console.error(`Failed to fetch short product descriptions: ${error}`);
@@ -482,7 +526,7 @@ const getFullProducts = async (
   url.search = queryParams.toString();
 
   try {
-    const fullProducts = await doFetch<FullProduct[]>(url.toString());
+    const fullProducts = await doFetchWrapper<FullProduct[]>(url.toString());
     return fullProducts;
   } catch (error) {
     console.error(`Failed to fetch full product descriptions: ${error}`);
@@ -503,7 +547,7 @@ const getProduct = async (params: GetProductParams): Promise<FullProduct> => {
   url.search = queryParams.toString();
 
   try {
-    const product = await doFetch<FullProduct>(url.toString());
+    const product = await doFetchWrapper<FullProduct>(url.toString());
     return product;
   } catch (error) {
     console.error(`Failed to fetch product description: ${error}`);
@@ -526,7 +570,7 @@ const getProductFeeds = async (
   url.search = queryParams.toString();
 
   try {
-    const feeds = await doFetch<ProductFeed[]>(url.toString());
+    const feeds = await doFetchWrapper<ProductFeed[]>(url.toString());
     return feeds;
   } catch (error) {
     console.error(`Failed to fetch product feeds: ${error}`);
@@ -547,7 +591,7 @@ const getSales = async (params: GetSalesParams): Promise<Sale[]> => {
   url.search = queryParams.toString();
 
   try {
-    const sales = await doFetch<Sale[]>(url.toString());
+    const sales = await doFetchWrapper<Sale[]>(url.toString());
     return sales;
   } catch (error) {
     console.error(`Failed to fetch sales: ${error}`);
@@ -570,7 +614,9 @@ const getPaymentSummary = async (
   url.search = queryParams.toString();
 
   try {
-    const paymentSummary = await doFetch<PaymentSummary[]>(url.toString());
+    const paymentSummary = await doFetchWrapper<PaymentSummary[]>(
+      url.toString()
+    );
     return paymentSummary;
   } catch (error) {
     console.error(`Failed to fetch payment summary: ${error}`);
@@ -593,7 +639,9 @@ const getPaymentDetails = async (
   url.search = queryParams.toString();
 
   try {
-    const paymentDetails = await doFetch<PaymentDetails[]>(url.toString());
+    const paymentDetails = await doFetchWrapper<PaymentDetails[]>(
+      url.toString()
+    );
     return paymentDetails;
   } catch (error) {
     console.error(`Failed to fetch payment details: ${error}`);
@@ -601,50 +649,7 @@ const getPaymentDetails = async (
   }
 };
 
-
-
-type FlexOffersAPI = {
-    init: Function;
-    advertisers: {
-      getAdvertiserTerms: Function;
-      getAdvertisers: Function;
-      getCampaigns: Function;
-      getFeaturedAdvertisers: Function;
-      getNewestAdvertisers: Function;
-      getProductAdvertisers: Function;
-    };
-    products: {
-      getCategories: Function;
-      getAllCatalogs: Function;
-      getProductCount: Function;
-      getProducts: Function;
-      getProductCategories: Function;
-      getFullProducts: Function;
-      getProductFeeds: Function;
-      getProduct: Function;
-    };
-    promotions: {
-      getCoupons: Function;
-      getPromotionalLinks: Function;
-      getPromotionsCurated: Function;
-      getPromotionTypes: Function;
-      getPromotionTypesCountByAdvertiserId: Function;
-      getBannerTypes: Function;
-    };
-    publisher: {
-      getDomains: Function;
-      getSales: Function;
-      getPaymentSummary: Function;
-      getPaymentDetails: Function;
-    };
-    actions: {
-      createDeepLink: Function;
-      applyToAdvertiser: Function;
-    };
-  };
-  
-
-const flexoffers: FlexOffersAPI = {
+const flexoffers = {
   init,
   advertisers: {
     getAdvertiserTerms,
