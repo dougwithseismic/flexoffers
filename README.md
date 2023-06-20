@@ -16,7 +16,7 @@ Use this wrapper to monetize your traffic and build out products that help one a
 Use npm to install the package:
 
 ```bash
-npm install flexoffers-api
+npm install flexoffers
 ```
 
 ## Usage
