@@ -28,4 +28,4 @@ dist-ssr
 .env.*
 
 # add src/tests.js
-src/tests.js
+testing/*
