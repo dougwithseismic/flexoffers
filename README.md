@@ -5,7 +5,7 @@
 
 ## Description
 
-This package provides a simple and intuitive wrapper around the FlexOffers API, which should 
+This package provides a simple and intuitive wrapper around the FlexOffers API, which should
 
 ## Installation
 
@@ -24,7 +24,7 @@ const FlexOffers = require('flexoffers-api');
 const flexoffers = new FlexOffers({ api_key: 'YOUR_API_KEY' });
 ```
 
-Here are examples of how to use each function in the FlexOffers API: 
+Here are examples of how to use each function in the FlexOffers API:
 
 ### `getDomains()`
 
@@ -36,7 +36,6 @@ This method fetches all domains registered to your FlexOffers account.
 const domains = await flexoffers.getDomains();
 console.log(domains);
 ```
-
 
 | Function                          | Description                                                                           |
 |-----------------------------------|---------------------------------------------------------------------------------------|
@@ -64,6 +63,7 @@ console.log(domains);
 | getFeaturedAdvertisers            | Fetches a list of featured advertisers on the platform.                               |
 | getNewestAdvertisers              | Fetches a list of the newest advertisers on the platform.                             |
 | getProductAdvertisers             | Retrieves a list of advertisers for a specific product.                               |
+
 ## Contributing
 
 Contributions are welcome! Please read the [contributing guide](./CONTRIBUTING.md) to get started.
@@ -71,6 +71,7 @@ Contributions are welcome! Please read the [contributing guide](./CONTRIBUTING.m
 ## License
 
 This package is open source and available under the [MIT License](https://opensource.org/licenses/MIT).
+
 ```
 
 This will be continued for each function with the relevant example. It's also a good practice to include a contributing guide in your repository if you're looking for contributions from the community.
