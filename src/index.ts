@@ -75,12 +75,14 @@ const doFetchWrapper = async <T>(
   }
 
   try {
+    // Fetch data from the FlexOffers API.
     const data = await doFetch<T>(url, {
       apiKey: API_KEY as string,
       ...options,
     });
     return data;
   } catch (error: unknown) {
+    // Log the error.
     console.error("Error Fetching: ", error);
     return undefined as unknown as T;
   }
