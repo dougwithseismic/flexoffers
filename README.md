@@ -28,7 +28,7 @@ import flexoffers from 'flexoffers'
 flexoffers.init('YOUR_API_KEY')
 ```
 
-Here are examples of how to use each function in the FlexOffers API:
+TODO: Here are examples of how to use each function in the FlexOffers API:
 
 ### `getDomains()`
 
