@@ -24,8 +24,8 @@ npm install flexoffers-api
 Firstly, you need to import the module and create an instance of the FlexOffers class.
 
 ```ts
-const FlexOffers = require('flexoffers-api');
-const flexoffers = new FlexOffers({ api_key: 'YOUR_API_KEY' });
+import flexoffers from 'flexoffers'
+flexoffers.init('YOUR_API_KEY')
 ```
 
 Here are examples of how to use each function in the FlexOffers API:
