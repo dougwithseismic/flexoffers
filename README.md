@@ -1,4 +1,3 @@
-```markdown
 # FlexOffers API Wrapper
 
 [![npm version](https://badge.fury.io/js/flexoffers-api.svg)](https://badge.fury.io/js/flexoffers-api)
