@@ -14,5 +14,5 @@ const getProducts = async () => {
   console.log(products);
 };
 
-flexoffers.init("620e8c6d-26bc-4db5-b75d-dfc527770510");
+flexoffers.init("");
 getProducts();
