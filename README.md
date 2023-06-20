@@ -72,8 +72,4 @@ Contributions are welcome! Please read the [contributing guide](./CONTRIBUTING.m
 
 ## License
 
-This package is open source and available under the [MIT License](https://opensource.org/licenses/MIT).
-
-```
-
-This will be continued for each function with the relevant example. It's also a good practice to include a contributing guide in your repository if you're looking for contributions from the community.
+This package is open source and available under the [MIT License](https://opensource.org/licenses/MIT)
