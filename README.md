@@ -11,8 +11,6 @@ Use this wrapper to monetize your traffic and build out products that help one a
 
 [Want to chat? Connect with me on Twitter](https://twitter.com/dougiesilkstone)
 
-## :warning: Library won't work properly until I find documentation on how to authenticate with our apiKey! Don't sink time into this, but feel free to open a PR if you know how
-
 ## Installation
 
 Use npm to install the package:
