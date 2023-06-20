@@ -1,17 +1,4 @@
-import fetch, {
-  RequestInit as NodeRequestInit,
-  Response,
-  HeadersInit,
-} from "node-fetch";
-
-/**
- * Custom type for fetch options
- */
-type RequestInit = NodeRequestInit & {
-  headers?: HeadersInit & {
-    "Content-Type"?: string;
-  };
-};
+import fetch from "cross-fetch";
 
 /**
  * Custom type for better error handling
@@ -21,21 +8,25 @@ type FetchError = {
   message: string;
 };
 
+interface RequestOptions extends RequestInit {
+  headers?: HeadersInit;
+}
+
 /**
  * An asynchronous function that wraps the native fetch function providing enhanced error handling.
  * Automatically includes 'Content-Type': 'application/json' header, but also allows other headers to be included optionally.
  *
  * @template T The expected return type.
  * @param {string} url The URL you want to fetch.
- * @param {RequestInit} [options] The options you want to pass to the fetch function.
+ * @param {RequestOptions} [options] The options you want to pass to the fetch function.
  * @returns {Promise<T>} Returns a Promise that resolves with the result of the fetch operation.
  * @throws {FetchError} Throws an error if there is a network, API or parsing error.
  */
 export const doFetch = async <T>(
   url: string,
-  options?: RequestInit
+  options?: RequestOptions
 ): Promise<T> => {
-  const requestOptions: RequestInit = {
+  const requestOptions: RequestOptions = {
     ...options,
     headers: {
       "Content-Type": "application/json",
@@ -46,10 +37,12 @@ export const doFetch = async <T>(
   let response: Response;
   try {
     response = await fetch(url, requestOptions);
-  } catch (error) {
+  } catch (error: Error | unknown) {
     throw {
       type: "fetch-error",
-      message: "Network error, unable to fetch",
+      message: `Network error, unable to fetch ${url}: ${
+        (error as Error)?.message ?? "Unknown error"
+      }`,
     } as FetchError;
   }
 
@@ -61,16 +54,21 @@ export const doFetch = async <T>(
     } catch (e) {
       errMsg = response.statusText;
     }
-    throw { type: "api-error", message: errMsg } as FetchError;
+    throw {
+      type: "api-error",
+      message: `${response.status} - ${errMsg}`,
+    } as FetchError;
   }
 
   let data: T;
   try {
     data = (await response.json()) as T;
-  } catch (error) {
+  } catch (error: Error | unknown) {
     throw {
       type: "parsing-error",
-      message: "Parsing error, could not parse fetch response",
+      message: `Parsing error, could not parse fetch response from ${url}: ${
+        (error as Error)?.message ?? "Unknown error"
+      }`,
     } as FetchError;
   }
 
@@ -124,5 +122,4 @@ try {
   const err = error as FetchError;
   console.error(`DELETE Error: ${err.message}`);
 }
-
 */
