@@ -1,5 +1,5 @@
 {
-    "name": "flexoffers-api",
+    "name": "flexoffers",
     "version": "1.0.0",
     "description": "A lightweight wrapper around the Flexoffers API to make affiliate easier",
     "main": "index.js",
