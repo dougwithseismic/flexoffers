@@ -5,9 +5,11 @@
 
 ## Description
 
-This package provides a simple and intuitive wrapper around the FlexOffers API, which should help make building affiliate products waaay easier. Flexoffers is a great platform for monetizing huge amounts of B2C traffic but as developers, we missing the DX to build these products quickly. Here's my contribution to a platform I want to see succeed.
+This package provides a simple and intuitive wrapper around the FlexOffers API, which should help make building affiliate products waaay easier. Flexoffers is a great platform for monetizing huge amounts of B2C traffic but as developers, we missing the DX to build these products quickly. 
 
-[Connect with me on Twitter](https://twitter.com/dougiesilkstone)
+Use this wrapper to monetize your traffic and build out products that help one another!
+
+[Want to chat? Connect with me on Twitter](https://twitter.com/dougiesilkstone)
 
 ## Installation
 
