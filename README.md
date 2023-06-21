@@ -56,7 +56,7 @@ const getProducts = async () => {
 A one liner function that takes a URL and spits out a monetized link 🔥
 
 ```ts
-  const affiliateLink = await flexoffers.helpers.createAffiliateLinkFromUrl(`https://www.vans.com/en-us/shoes-c00081`, { fobs1: 'clickId_1', fobs2: 'clickId_2', fobs3: 'clickId_3', fobs4: 'clickId_4', fobs5: 'clickId_5'});
+  const affiliateLink = await flexoffers.helpers.createAffiliateLinkFromUrl(`https://www.vans.com/en-us/shoes-c00081`, { fobs: 'clickId_1', fobs2: 'clickId_2', fobs3: 'clickId_3', fobs4: 'clickId_4', fobs5: 'clickId_5'});
 ```
 
 | Function                          | Description                                                                           |
