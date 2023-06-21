@@ -1,4 +1,4 @@
-# FlexOffers API Wrapper
+# FlexOffers - A Fully Typed Wrapper For Monetizing With Affiliate
 
 [![npm version](https://badge.fury.io/js/flexoffers-api.svg)](https://badge.fury.io/js/flexoffers-api)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -9,7 +9,9 @@ Looking for a lightweight wrapper for the FlexOffers API? Here it is! Flexoffers
 
 Use this wrapper to monetize your traffic and build out products that help make life easier for everyone.
 
+### Useful Links
 [Want to chat? Connect with me on Twitter](https://twitter.com/dougiesilkstone)
+[Sign up to Flex Offers - Affiliate Link](https://publisherpro.flexoffers.com/registration?RID=1275043)
 
 ## Installation
 
