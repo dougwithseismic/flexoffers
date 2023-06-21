@@ -1,8 +1,8 @@
 {
     "name": "flexoffers",
-    "version": "1.0.14",
+    "version": "1.0.15",
     "description": "A lightweight wrapper around the Flexoffers API to make building affiliate products a breeze.",
-    "main": "index.js",
+    "main": "dist/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "tsc",
