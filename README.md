@@ -5,9 +5,9 @@
 
 ## Description
 
-This package provides a simple and intuitive wrapper around the FlexOffers API, which should help make building affiliate products waaay easier. Flexoffers is a great platform for monetizing huge amounts of B2C traffic but as developers, we missing the DX to build these products quickly.
+Looking for a lightweight wrapper for the FlexOffers API? Here it is! Flexoffers is a great platform for monetizing huge amounts of B2C traffic but as developers, we missing the DX to build these products quickly. I built this out of neccessity so I could ship and monetize products faster, and now I'm sharing so we can all make building affiliate products waaay easier.
 
-Use this wrapper to monetize your traffic and build out products that help one another!
+Use this wrapper to monetize your traffic and build out products that help make life easier for everyone.
 
 [Want to chat? Connect with me on Twitter](https://twitter.com/dougiesilkstone)
 
@@ -28,22 +28,24 @@ import flexoffers from 'flexoffers'
 flexoffers.init('YOUR_API_KEY')
 ```
 
+### Examples
 TODO: Here are examples of how to use each function in the FlexOffers API:
 
-### `getDomains()`
+#### getFullProducts
 
-This method fetches all domains registered to your FlexOffers account.
-
-#### Example
+Returns a full list of products available from flexoffers product feed.
 
 ```ts
-const domains = await flexoffers.getDomains();
-console.log(domains);
+const getProducts = async () => {
+  const products = await flexoffers.products.getFullProducts({
+    manufacturer: "vans",
+    page: 1,
+    pageSize: 20,
+  });
+  console.log(products);
+  return products;
+};
 ```
-
-
-
-
 
 | Function                          | Description                                                                           |
 |-----------------------------------|---------------------------------------------------------------------------------------|
@@ -52,6 +54,7 @@ console.log(domains);
 | applyToAdvertiser                 | Allows the client to apply to an advertiser in FlexOffers.                            |
 | getAdvertisers                    | Fetches a list of advertisers that match given parameters.                            |
 | createDeepLink                    | Generates a deep link to a specific URL in an advertiser's website.                   |
+| **createAffiliateLinkFromUrl**    | A powerful helper that takes a url string and returns a monetizable link.             |
 | getCategories                     | Fetches all categories available in the FlexOffers platform.                          |
 | getProductCount                   | Retrieves the number of products available based on provided parameters.              |
 | getProducts                       | Fetches a list of products with minimal information (product id, name, brand).        |
@@ -70,6 +73,7 @@ console.log(domains);
 | getCampaigns                      | Retrieves a list of all available campaigns.                                         |
 | getFeaturedAdvertisers            | Fetches a list of featured advertisers on the platform.                               |
 | getNewestAdvertisers              | Fetches a list of the newest advertisers on the platform.                             |
+| getProductAdvertisers             | Retrieves a list of advertisers for a specific product.                               |
 | getProductAdvertisers             | Retrieves a list of advertisers for a specific product.                               |
 
 ## Contributing

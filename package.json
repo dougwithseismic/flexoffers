@@ -1,7 +1,7 @@
 {
-    "name": "flexoffers-sdk",
-    "version": "1.0.0",
-    "description": "A lightweight wrapper around the Flexoffers API to make affiliate easier",
+    "name": "flexoffers-js",
+    "version": "1.0.01",
+    "description": "A lightweight wrapper around the Flexoffers API to make building affiliate products a breeze.",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
