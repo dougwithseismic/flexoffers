@@ -29,3 +29,5 @@ dist-ssr
 
 # add src/tests.js
 testing/*
+
+nodemon.json
