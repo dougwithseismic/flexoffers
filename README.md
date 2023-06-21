@@ -23,7 +23,7 @@ npm install flexoffers
 
 ## Usage
 
-Firstly, you need to import the module and create an instance of the FlexOffers class.
+Firstly, you need to import the module and init with your API key.
 
 ```ts
 import flexoffers from 'flexoffers'
@@ -48,6 +48,25 @@ const getProducts = async () => {
   return products;
 };
 ```
+
+
+#### createAffiliateLinkFromUrl(url)
+
+A one liner function that takes a URL and spits out a monetized link 🔥
+
+```ts
+const getProducts = async () => {
+  const products = await flexoffers.products.getFullProducts({
+    manufacturer: "vans",
+    page: 1,
+    pageSize: 20,
+  });
+  console.log(products);
+  return products;
+};
+```
+
+
 
 | Function                          | Description                                                                           |
 |-----------------------------------|---------------------------------------------------------------------------------------|

@@ -92,3 +92,13 @@ export const createAffiliateLinkFromUrl = async (
 //   .catch((err) => {
 //     console.error(err);
 //   });
+
+
+
+
+import flexoffers from 'flexoffers'
+
+flexoffers.init('YOUR_API_KEY')
+createAffiliateLinkFromUrl("https://www.lush.com/uk/en/p/seanik-shampoo-bar-2021")
+
+
