@@ -41,6 +41,10 @@ const domains = await flexoffers.getDomains();
 console.log(domains);
 ```
 
+
+
+
+
 | Function                          | Description                                                                           |
 |-----------------------------------|---------------------------------------------------------------------------------------|
 | getDomains                        | Retrieves the domains registered in the FlexOffers account.                           |

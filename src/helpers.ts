@@ -11,39 +11,31 @@ type FetchError = {
 export interface RequestOptions extends RequestInit {
   apiKey?: string;
 }
-/**
- * An asynchronous function that wraps the native fetch function providing enhanced error handling.
- * Automatically includes 'Content-Type': 'application/json' header, but also allows other headers to be included optionally.
- *
- * @template T The expected return type.
- * @param {string} url The URL you want to fetch.
- * @param {RequestOptions} [options] The options you want to pass to the fetch function.
- * @returns {Promise<T>} Returns a Promise that resolves with the result of the fetch operation.
- * @throws {FetchError} Throws an error if there is a network, API or parsing error.
- */
+
 export const doFetch = async <T>(
   url: string,
   options?: RequestOptions
 ): Promise<T> => {
+  // Lets define the request options here.
   const requestOptions: RequestOptions = {
-    ...options,
     headers: {
       "Content-Type": "application/json",
       apiKey: options?.apiKey ?? "",
-      ...options?.headers,
+      ...(options?.headers || {}),
     },
+    ...options,
   };
 
   let response: Response;
+
+  if (!options?.apiKey) {
+    throw new Error("No API key provided.");
+  }
+
   try {
     response = await fetch(url, requestOptions);
-  } catch (error: Error | unknown) {
-    throw {
-      type: "fetch-error",
-      message: `Network error, unable to fetch ${url}: ${
-        (error as Error)?.message ?? "Unknown error"
-      }`,
-    } as FetchError;
+  } catch (error: unknown) {
+    throw new Error(`Network error, unable to fetch ${url}: ${error}`);
   }
 
   if (!response.ok) {
@@ -54,25 +46,18 @@ export const doFetch = async <T>(
     } catch (e) {
       errMsg = response.statusText;
     }
-    throw {
-      type: "api-error",
-      message: `${response.status} - ${errMsg}`,
-      error: response,
-    } as FetchError;
+    throw new Error(`${response.status} - ${errMsg}`);
   }
 
   let data: T;
   try {
-    data = (await response.json()) as T;
-  } catch (error: Error | unknown) {
-    throw {
-      type: "parsing-error",
-      message: `Parsing error, could not parse fetch response from ${url}: ${
-        (error as Error)?.message ?? "Unknown error"
-      }`,
-    } as FetchError;
+    const contentType = response.headers.get('content-type');
+    data = contentType?.includes('application/json') ? await response.json() : await response.text() as any;
+  } catch (error) {
+    throw new Error(
+      `Parsing error, could not parse fetch response from ${url}: ${error}`
+    );
   }
-
   return data;
 };
 
