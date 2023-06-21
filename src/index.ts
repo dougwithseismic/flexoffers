@@ -62,7 +62,6 @@ const init = (apiKey: string): void => {
   }
 
   API_KEY = apiKey;
-  console.log("FlexOffers API initialized");
 };
 
 /**

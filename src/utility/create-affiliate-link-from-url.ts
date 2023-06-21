@@ -5,12 +5,15 @@ import {
 } from "../types";
 
 import flexoffers from "../index";
+import xss from "xss";
 
 export const createAffiliateLinkFromUrl = async (
   url: string,
   options?: CreateAffiliateLinkOptions
 ): Promise<DeeplinkResponse | null> => {
-  const domain = flexoffers.helpers.getDomainFromUrl(url);
+  const sanitizedUrl = xss(url);
+
+  const domain = flexoffers.helpers.getDomainFromUrl(sanitizedUrl);
 
   const getAllApprovedAdvertisers = async (): Promise<
     ShortenedAdvertiser[] | null
