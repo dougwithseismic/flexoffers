@@ -1,6 +1,6 @@
 {
     "name": "flexoffers",
-    "version": "1.0.172",
+    "version": "1.0.173",
     "description": "A lightweight wrapper around the Flexoffers API to make building affiliate products a breeze.",
     "main": "dist/index.js",
     "scripts": {
@@ -23,7 +23,6 @@
     },
     "dependencies": {
         "cross-fetch": "^3.1.6",
-        "flexoffers": "^1.0.171",
         "xss": "^1.0.14"
     }
 }
