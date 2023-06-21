@@ -71,7 +71,7 @@ export interface DeeplinkResponse {
 export type CreateDeepLinkParams = {
   AdvertiserId: number;
   URL: string;
-  fobs?: string;
+  fobs1?: string;
   fobs2?: string;
   fobs3?: string;
   fobs4?: string;
@@ -544,7 +544,6 @@ export type ShortenedAdvertiser = {
 };
 
 export type CreateAffiliateLinkOptions = {
-  fobs?: string;
   fobs1?: string;
   fobs2?: string;
   fobs3?: string;

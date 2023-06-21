@@ -84,7 +84,7 @@ export const createAffiliateLinkFromUrl = async (
 };
 
 // const options: CreateAffiliateLinkOptions = {
-//   fobs: "mrjuan",
+//   fobs1: "mrjuan",
 //   fobs2: "discordgroup-private",
 // };
 
