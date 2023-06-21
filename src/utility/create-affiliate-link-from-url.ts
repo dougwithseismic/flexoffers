@@ -4,7 +4,7 @@ import {
   ShortenedAdvertiser,
 } from "../types";
 
-import flexoffers from "../";
+import flexoffers from "../index";
 
 export const createAffiliateLinkFromUrl = async (
   url: string,
@@ -95,8 +95,6 @@ export const createAffiliateLinkFromUrl = async (
 
 
 
-
-import flexoffers from 'flexoffers'
 
 flexoffers.init('YOUR_API_KEY')
 createAffiliateLinkFromUrl("https://www.lush.com/uk/en/p/seanik-shampoo-bar-2021")

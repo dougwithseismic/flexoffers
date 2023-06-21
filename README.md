@@ -10,6 +10,7 @@ Looking for a lightweight wrapper for the FlexOffers API? Here it is! Flexoffers
 Use this wrapper to monetize your traffic and build out products that help make life easier for everyone.
 
 ### Useful Links
+
 [Want to chat? Connect with me on Twitter](https://twitter.com/dougiesilkstone)
 [Sign up to Flex Offers - Affiliate Link](https://publisherpro.flexoffers.com/registration?RID=1275043)
 
@@ -31,6 +32,7 @@ flexoffers.init('YOUR_API_KEY')
 ```
 
 ### Examples
+
 TODO: Here are examples of how to use each function in the FlexOffers API:
 
 #### getFullProducts
@@ -49,24 +51,13 @@ const getProducts = async () => {
 };
 ```
 
-
 #### createAffiliateLinkFromUrl(url)
 
 A one liner function that takes a URL and spits out a monetized link 🔥
 
 ```ts
-const getProducts = async () => {
-  const products = await flexoffers.products.getFullProducts({
-    manufacturer: "vans",
-    page: 1,
-    pageSize: 20,
-  });
-  console.log(products);
-  return products;
-};
+  const affiliateLink = await flexoffers.helpers.createAffiliateLinkFromUrl(`https://www.vans.com/en-us/shoes-c00081`);
 ```
-
-
 
 | Function                          | Description                                                                           |
 |-----------------------------------|---------------------------------------------------------------------------------------|
