@@ -1,6 +1,6 @@
 {
     "name": "flexoffers",
-    "version": "1.0.13",
+    "version": "1.0.14",
     "description": "A lightweight wrapper around the Flexoffers API to make building affiliate products a breeze.",
     "main": "index.js",
     "scripts": {
