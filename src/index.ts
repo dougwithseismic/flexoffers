@@ -48,6 +48,7 @@ import {
   GetProductAdvertisersParams,
   GetAllCatalogsParams,
   AdvertiserResponse,
+  GetAllAdvertisersResponse,
 } from "./types";
 
 const API_HOST = `https://api.flexoffers.com`;
@@ -166,6 +167,7 @@ const getAdvertisers = async (
     const results = await doFetch<{ results: Advertiser[] }>(url.toString(), {
       apiKey: API_KEY,
     });
+
     return results;
   } catch (error: unknown) {
     console.error(`Failed to fetch advertisers: ${error}`);
@@ -173,6 +175,65 @@ const getAdvertisers = async (
   }
 };
 
+/**
+ * Fetches a paginated list of ALL advertisers from the FlexOffers API. Coule be expensive. Use sparingly.
+ * @param {AdvertisersQueryParams} params - The query parameters for the fetch operation.
+ * @returns {Promise<Advertiser[]>} - A promise that resolves to an array of Advertiser objects.
+ * @throws Will throw an error if the fetch operation fails.
+ */
+const getAllAdvertisers = async (
+  params: AdvertisersQueryParams
+): Promise<Advertiser[]> => {
+  // Construct the URL for the API request
+  const url = new URL(`${API_HOST}/advertisers`);
+  // Convert params object to URLSearchParams
+
+  // to go as fast as possible, we'll use Promise.all to fetch all pages in parallel.
+  // first we'll need to know how many pages there are, so we'll fetch the first page.
+
+  const queryParams = new URLSearchParams({
+    page: 1,
+    pageSize: 500,
+    params,
+  } as Record<string, any>);
+  url.search = queryParams.toString();
+
+  // First page here.
+  const response = await doFetch<GetAllAdvertisersResponse>(url.toString(), {
+    apiKey: API_KEY,
+  });
+
+  // Now we know how many pages there are, we can fetch them all in parallel.
+  const pages = Array.from(
+    { length: Math.ceil(response.totalCount / response.pageSize) }, // Dont forget we need to round this up so we catch the last page.
+    (_, i) => i + 1
+  );
+
+  const pagePromises = pages.map((page) => {
+    const queryParams = new URLSearchParams({
+      page,
+      pageSize: 500,
+      params,
+    } as Record<string, any>);
+    url.search = queryParams.toString();
+
+    return doFetch<GetAllAdvertisersResponse>(url.toString(), {
+      apiKey: API_KEY,
+    })
+  });
+
+  const allAdvertisers = await Promise.all(pagePromises).catch(
+    (error: unknown) => {
+      console.error(`Failed to fetch advertisers: ${error}`);
+      throw error;
+    }
+  );
+
+  // then assuming we've got all the pages, we can flatten the results and return them.
+
+  const flattenedAdvertisers = allAdvertisers.flatMap((page) => page.results);
+  return flattenedAdvertisers;
+};
 /**
  * Creates a deeplink for a given URL and advertiser ID.
  * @param {CreateDeepLinkParams} params Query parameters for creating a deeplink.
@@ -674,6 +735,7 @@ const flexoffers = {
   advertisers: {
     getAdvertiserTerms,
     getAdvertisers,
+    getAllAdvertisers,
     getCampaigns,
     getFeaturedAdvertisers,
     getNewestAdvertisers,

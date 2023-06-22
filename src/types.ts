@@ -20,24 +20,32 @@ export interface AdvertiserResponse {
 
 // advertiser-types.ts
 
+export interface GetAllAdvertisersResponse {
+  results: Advertiser[];
+  pageNumber: number;
+  pageSize: number;
+  totalCount: number;
+  resultType: string;
+}
+
 export interface Advertiser {
   id: number;
   name?: string;
   domainUrl?: string;
   categoryIds?: string;
-  Created?: string;
-  ProgramStatus?: string;
-  LastStatusUpdated?: string;
+  created?: string;
+  programStatus?: string;
+  lastStatusUpdated?: string;
   applicationStatus?: string;
   applicationStatusId?: string;
   description?: string;
   payout?: string;
   imageUrl?: string;
   country?: string;
-  SevenDayEpc?: string;
-  ThirtyDayEpc?: string;
-  ThreeMonthEpc?: string;
-  ProductAdvertiser?: boolean;
+  sevenDayEpc?: string;
+  thirtyDayEpc?: string;
+  threeMonthEpc?: string;
+  productAdvertiser?: boolean;
   PromotionalAdvertiser?: boolean;
   allowsDeeplinking?: boolean;
   deeplinkURL?: string;
@@ -45,18 +53,18 @@ export interface Advertiser {
 }
 
 export interface AdvertisersQueryParams {
-  AdvertiserIds?: string;
-  Name?: string;
-  ProgramStatus?: string;
-  ApplicationStatus?: string;
+  advertiserIds?: string;
+  name?: string;
+  programStatus?: string;
+  applicationStatus?: string;
   categoryIds?: string;
-  Country?: string;
-  DeeplinkFlexlinks?: boolean;
-  ProductAdvertiser?: boolean;
-  AlphabetLetter?: string;
+  country?: string;
+  deeplinkFlexlinks?: boolean;
+  productAdvertiser?: boolean;
+  alphabetLetter?: string;
   sortColumn?: string;
   sortOrder?: string;
-  Page?: number;
+  page?: number;
   pageSize?: number;
 }
 

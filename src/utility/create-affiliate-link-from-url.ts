@@ -15,33 +15,34 @@ export const createAffiliateLinkFromUrl = async (
 
   const domain = flexoffers.helpers.getDomainFromUrl(sanitizedUrl);
 
+  if (!domain) {
+    throw new Error(`Invalid URL: ${sanitizedUrl}`);
+  }
+
+  const hostName = new URL(sanitizedUrl).hostname; // Needed because we'll try to match the domain to the advertiser's domain assuming the domain starts with the same letter. It's not great.
   const getAllApprovedAdvertisers = async (): Promise<
     ShortenedAdvertiser[] | null
   > => {
     try {
-      const advertisers = await flexoffers.advertisers.getAdvertisers({
-        Page: 1,
-        pageSize: 5000,
-        ProgramStatus: "Approved",
-        ApplicationStatus: "Approved",
+      const advertisers = await flexoffers.advertisers.getAllAdvertisers({
+        page: 1,
+        pageSize: 500,
+        programStatus: "Approved",
+        applicationStatus: "Approved",
+        // alphabetLetter: hostName[0] ?? null,
       });
 
-      if (
-        !advertisers ||
-        !advertisers.results ||
-        advertisers.results.length === 0
-      ) {
+      if (!advertisers || advertisers.length === 0) {
         throw new Error("No advertisers found");
       }
 
-      return advertisers.results.map(
-        ({ id, domainUrl, name, deeplinkURL }) => ({
-          id,
-          deeplinkURL,
-          domainUrl,
-          name,
-        })
-      );
+
+      return advertisers.map(({ id, domainUrl, name, deeplinkURL }) => ({
+        id,
+        deeplinkURL,
+        domainUrl,
+        name,
+      }));
     } catch (error) {
       console.error("Failed to retrieve advertisers:", error);
       return null;
